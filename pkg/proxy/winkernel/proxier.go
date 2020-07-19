@@ -428,6 +428,9 @@ func (sm *proxyServiceMap) unmerge(other proxyServiceMap, existingPorts, staleSe
 			}
 			info.cleanupAllPolicies(curEndpoints[svcPortName])
 			delete(*sm, svcPortName)
+			// Also delete the endpoints map entry for this service, 
+			// since the endpoints are already cleaned up
+			delete(curEndpoints, svcPortName)
 		} else {
 			klog.Errorf("Service port %q removed, but doesn't exists", svcPortName)
 		}
